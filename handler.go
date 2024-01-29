@@ -293,13 +293,11 @@ func (h *handler) appendLevel(buf *buffer, level slog.Level) {
 		appendLevelDelta(buf, level-slog.LevelInfo)
 		buf.WriteStringIf(!h.noColor, ansiReset)
 	case level < slog.LevelError:
-		buf.WriteStringIf(!h.noColor, ansiBrightYellow)
-		buf.WriteString("WRN")
+		buf.WriteString("::warning::")
 		appendLevelDelta(buf, level-slog.LevelWarn)
 		buf.WriteStringIf(!h.noColor, ansiReset)
 	default:
-		buf.WriteStringIf(!h.noColor, ansiBrightRed)
-		buf.WriteString("ERR")
+		buf.WriteString("::error::")
 		appendLevelDelta(buf, level-slog.LevelError)
 		buf.WriteStringIf(!h.noColor, ansiReset)
 	}

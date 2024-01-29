@@ -1,3 +1,12 @@
+# This is a fork of [github.com/lmittmann/tint](github.com/lmittmann/tint)
+
+A few things have been changed, specifically error and warning logs are now prefixed with `::error::` and `::warning::` respectively.
+This means they show up better in the output and summary of Github Actions runs.
+
+Info and debug logs are unchanged, since we don't need them in the summary.
+
+Documentation: [Setting a warning message](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message)
+
 # `tint`: 🌈 **slog.Handler** that writes tinted logs
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/lmittmann/tint.svg)](https://pkg.go.dev/github.com/lmittmann/tint#section-documentation)

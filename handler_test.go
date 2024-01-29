@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lmittmann/tint"
+	"github.com/axioscode/tint-gha"
 )
 
 var faketime = time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC)
@@ -54,7 +54,7 @@ func TestHandler(t *testing.T) {
 			F: func(l *slog.Logger) {
 				l.Error("test", tint.Err(errors.New("fail")))
 			},
-			Want: `Nov 10 23:00:00.000 ERR test err=fail`,
+			Want: `Nov 10 23:00:00.000 ::error:: test err=fail`,
 		},
 		{
 			F: func(l *slog.Logger) {
@@ -99,7 +99,7 @@ func TestHandler(t *testing.T) {
 			F: func(l *slog.Logger) {
 				l.Info("test", "key", "val")
 			},
-			Want: `Nov 10 23:00:00.000 INF tint/handler_test.go:100 test key=val`,
+			Want: `Nov 10 23:00:00.000 INF tint-gha/handler_test.go:100 test key=val`,
 		},
 		{
 			Opts: &tint.Options{
@@ -263,13 +263,13 @@ func TestHandler(t *testing.T) {
 			F: func(l *slog.Logger) {
 				l.Error("test", slog.Any("error", errors.New("fail")))
 			},
-			Want: `Nov 10 23:00:00.000 ERR test error=fail`,
+			Want: `Nov 10 23:00:00.000 ::error:: test error=fail`,
 		},
 		{ // https://github.com/lmittmann/tint/issues/15
 			F: func(l *slog.Logger) {
 				l.Error("test", tint.Err(nil))
 			},
-			Want: `Nov 10 23:00:00.000 ERR test err=<nil>`,
+			Want: `Nov 10 23:00:00.000 ::error:: test err=<nil>`,
 		},
 		{ // https://github.com/lmittmann/tint/pull/26
 			Opts: &tint.Options{
@@ -283,7 +283,7 @@ func TestHandler(t *testing.T) {
 			F: func(l *slog.Logger) {
 				l.Error("test")
 			},
-			Want: `Nov 11 23:00:00.000 ERR test`,
+			Want: `Nov 11 23:00:00.000 ::error:: test`,
 		},
 		{ // https://github.com/lmittmann/tint/pull/27
 			F: func(l *slog.Logger) {
@@ -326,14 +326,14 @@ func TestHandler(t *testing.T) {
 			F: func(l *slog.Logger) {
 				l.Info("test")
 			},
-			Want: `Nov 10 23:00:00.000 INF tint/handler_test.go:327 test`,
+			Want: `Nov 10 23:00:00.000 INF tint-gha/handler_test.go:327 test`,
 		},
 		{ // https://github.com/lmittmann/tint/issues/44
 			F: func(l *slog.Logger) {
 				l = l.WithGroup("group")
 				l.Error("test", tint.Err(errTest))
 			},
-			Want: `Nov 10 23:00:00.000 ERR test group.err=fail`,
+			Want: `Nov 10 23:00:00.000 ::error:: test group.err=fail`,
 		},
 		{ // https://github.com/lmittmann/tint/issues/55
 			F: func(l *slog.Logger) {
